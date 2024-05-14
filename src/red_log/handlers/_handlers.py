@@ -1,4 +1,4 @@
-CONSOLE_HANLDER: dict = {
+CONSOLE_HANDLER: dict = {
     "console": {
         "class": "logging.StreamHandler",
         "formatter": "default",

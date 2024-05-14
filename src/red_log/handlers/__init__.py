@@ -1,5 +1,5 @@
 from ._handlers import (
-    CONSOLE_HANLDER,
+    CONSOLE_HANDLER,
     CLI_CONSOLE_HANDLER,
     APP_FILE_HANDLER,
     ERR_FILE_HANDLER,

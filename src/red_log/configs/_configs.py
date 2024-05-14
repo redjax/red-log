@@ -5,7 +5,7 @@ from red_log.formatters import (
 )
 from red_log.handlers import (
     CLI_CONSOLE_HANDLER,
-    CONSOLE_HANLDER,
+    CONSOLE_HANDLER,
     APP_FILE_HANDLER,
     ERR_FILE_HANDLER,
     ROTATING_FILE_HANDLER,
@@ -17,7 +17,8 @@ DEFAULT_LOGGING_CONFIG = dict(
     version=1,
     disable_existing_loggers=False,
     propagate=True,
-    formatters=DEFAULT_LOG_FORMATTER,
-    handlers=[CONSOLE_HANLDER],
     root=DEFAULT_ROOT_LOGGER,
+    formatters=DEFAULT_LOG_FORMATTER,
+    handlers={**CONSOLE_HANDLER},
+    loggers={**DEFAULT_ROOT_LOGGER},
 )
