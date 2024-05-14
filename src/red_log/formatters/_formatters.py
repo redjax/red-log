@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+
 from red_log.core.constants import DEFAULT_DATE_FMT, DEFAULT_FMT
 
 DEFAULT_LOG_FORMATTER: dict = {

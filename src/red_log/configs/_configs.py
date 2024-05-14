@@ -4,9 +4,9 @@ from red_log.formatters import (
     DEFAULT_LOG_FORMATTER,
 )
 from red_log.handlers import (
-    CLI_CONSOLE_HANDLER,
-    CONSOLE_HANDLER,
     APP_FILE_HANDLER,
+    CLI_CONSOLE_HANDLER,
+    CONSOLE_HANLDER,
     ERR_FILE_HANDLER,
     ROTATING_FILE_HANDLER,
     TIMED_ROTATING_FILE_HANDLER,

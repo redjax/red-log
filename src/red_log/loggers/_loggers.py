@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 DEFAULT_ROOT_LOGGER: dict = {
     "": {
         "handlers": ["console"],

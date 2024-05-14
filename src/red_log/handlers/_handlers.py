@@ -1,4 +1,6 @@
-CONSOLE_HANDLER: dict = {
+from __future__ import annotations
+
+CONSOLE_HANLDER: dict = {
     "console": {
         "class": "logging.StreamHandler",
         "formatter": "default",

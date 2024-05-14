@@ -1,1 +1,3 @@
-from ._third_party_loggers import UVICORN_LOGGER, REQUESTS_LOGGER
+from __future__ import annotations
+
+from ._third_party_loggers import REQUESTS_LOGGER, UVICORN_LOGGER
