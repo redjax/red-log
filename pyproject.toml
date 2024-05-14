@@ -1,0 +1,21 @@
+[project]
+name = "red-log"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [{ name = "Jack Kenyon", email = "jkenyon@embracepetinsurance.com" }]
+dependencies = [
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "MIT" }
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.dev-dependencies]
+dev = ["ruff>=0.4.4", "nox>=2024.4.15"]
