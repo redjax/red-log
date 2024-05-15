@@ -9,3 +9,4 @@
 - [machinelearningplus.com: Python logging guide](https://www.machinelearningplus.com/python/python-logging-guide/)
 - [askpython.com: Configure logging in Python](https://www.askpython.com/python-modules/configure-logging-in-python)
 - [betterprogramming.pub: How to implement logging in your Python application](https://betterprogramming.pub/how-to-implement-logging-in-your-python-application-1730315003c4)
+- [Medium.com: Create a reusable logger factory](https://medium.com/geekculture/create-a-reusable-logger-factory-for-python-projects-419ad408665d)
