@@ -1,23 +1,11 @@
 import logging
 from logging.config import dictConfig
 from logging import StreamHandler, Handler, FileHandler, NullHandler
-from enum import Enum
 import logging.config
 
-from red_log.core.constants import DEFAULT_DATE_FMT, DEFAULT_FMT
+from red_log.core.constants import DEFAULT_DATE_FMT, DEFAULT_FMT, LogLevels
 
 log: logging.Logger = logging.getLogger("red_log")
-
-
-class LogLevels(Enum):
-    """Enum to convert input string to logging.LEVELNAME."""
-
-    NOTSET = logging.NOTSET
-    DEBUG = logging.DEBUG
-    INFO = logging.INFO
-    WARNING = logging.WARNING
-    ERROR = logging.ERROR
-    CRITICAL = logging.CRITICAL
 
 
 def get_config_dict(

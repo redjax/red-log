@@ -7,6 +7,7 @@ from logging.config import dictConfig
 
 from .configs import DEFAULT_LOGGING_CONFIG
 from .core.constants import DEFAULT_DATE_FMT, DEFAULT_FMT
+from .core.constants import LogLevels
 from .formatters import DEFAULT_LOG_FORMATTER
 from .handlers import (
     APP_FILE_HANDLER,
