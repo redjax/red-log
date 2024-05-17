@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import typing as t
+from enum import Enum
 import logging
 
-from enum import Enum
 
 DEFAULT_FMT: str = (
     "[%(asctime)s] [%(levelname)s] > [%(filename)s:%(lineno)d] [%(funcName)s]: %(message)s"
@@ -10,7 +11,7 @@ DEFAULT_FMT: str = (
 
 DEFAULT_DATE_FMT: str = "%Y-%m-%d %H:%M:%S"
 
-VALID_LOG_LEVELS: str = ["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+DEFAULT_LOGGER_STYLE: str = "%"
 
 
 class LogLevels(Enum):

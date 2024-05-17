@@ -3,7 +3,7 @@ from logging.config import dictConfig
 from logging import StreamHandler, Handler, FileHandler, NullHandler
 import logging.config
 
-from red_log.core.constants import DEFAULT_DATE_FMT, DEFAULT_FMT, LogLevels
+from red_log.constants import DEFAULT_DATE_FMT, DEFAULT_FMT, LogLevels
 
 log: logging.Logger = logging.getLogger("red_log")
 

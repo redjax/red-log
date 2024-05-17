@@ -6,8 +6,8 @@ import logging
 from logging.config import dictConfig
 
 from .configs import DEFAULT_LOGGING_CONFIG
-from .core.constants import DEFAULT_DATE_FMT, DEFAULT_FMT
-from .core.constants import LogLevels
+from .constants import DEFAULT_DATE_FMT, DEFAULT_FMT
+from .constants import LogLevels
 from .formatters import DEFAULT_LOG_FORMATTER
 from .handlers import (
     APP_FILE_HANDLER,
@@ -20,9 +20,6 @@ from .handlers import (
 from .loggers import DEFAULT_ROOT_LOGGER, REQUESTS_LOGGER, SILENT_LOGGER, UVICORN_LOGGER
 from .utils import configure_root_logger
 
-## Configure logging for red_log using the default logging config
-# dictConfig(DEFAULT_LOGGING_CONFIG)
-# logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 ## Dict config for library logger
 dictConfig(

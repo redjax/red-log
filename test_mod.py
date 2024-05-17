@@ -1,8 +1,9 @@
 import logging
+from logging.config import dictConfig
+import red_log
 
-from logging_config import LOG_CONF
-
-log = LOG_CONF.get_logger(__name__)
+dictConfig(red_log.DEFAULT_LOGGING_CONFIG)
+log = logging.getLogger("red_log")
 
 
 def test_log_levels():

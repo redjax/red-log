@@ -17,7 +17,7 @@ import red_log
 
 import logging.config
 from red_log.class_handlers import LogConfig, RootLogConfig
-from red_log.core.constants import DEFAULT_DATE_FMT
+from red_log.constants import DEFAULT_DATE_FMT
 
 logging.config.dictConfig(RootLogConfig().get_config())
 

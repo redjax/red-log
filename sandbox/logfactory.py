@@ -8,74 +8,6 @@ import red_log
 from pathlib import Path
 
 
-# class LoggerFactory:
-#     _LOG: logging.Logger | None = None
-
-#     @staticmethod
-#     def __create_logger(
-#         name: str,
-#         log_level: str,
-#         formatters: list[logging.Formatter] = None,
-#         handlers: list[logging.Handler] = None,
-#     ) -> logging.Logger:
-#         """Internal class method to handle creating a logger."""
-#         log_level = log_level.upper()
-
-#         # Initialize class variable with a logger object
-#         LoggerFactory._LOG = logging.getLogger(name)
-#         LoggerFactory._LOG.setLevel(log_level)
-
-#         # Clear any existing handlers to avoid duplicates
-#         for handler in LoggerFactory._LOG.handlers:
-#             LoggerFactory._LOG.removeHandler(handler)
-
-#         # Set formatters and handlers
-#         if formatters:
-#             for formatter in formatters:
-#                 for handler in handlers:
-#                     handler.setFormatter(formatter)
-#                     LoggerFactory._LOG.addHandler(handler)
-
-#         return LoggerFactory._LOG
-
-#     @staticmethod
-#     def get_logger(
-#         name: str,
-#         log_level: str,
-#         formatters: list[logging.Formatter] = None,
-#         handlers: list[logging.Handler] = None,
-#     ) -> logging.Logger:
-#         """Initialize a logger."""
-#         logger = LoggerFactory.__create_logger(
-#             name=name, log_level=log_level, formatters=formatters, handlers=handlers
-#         )
-
-#         return logger
-
-
-# file_formatter = logging.Formatter(
-#     fmt=red_log.DEFAULT_FMT, datefmt=red_log.DEFAULT_DATE_FMT
-# )
-# file_handler = logging.handlers.RotatingFileHandler(
-#     "app.log", maxBytes=10240, backupCount=3
-# )
-# file_handler.setLevel(logging.DEBUG)
-# file_handler.setFormatter(red_log.DEFAULT_FMT)
-
-# ## Initilize logger
-# log = LoggerFactory.get_logger(
-#     name=__name__,
-#     log_level="debug",
-#     formatters=[file_formatter],
-#     handlers=[file_handler],
-# )
-
-# log.debug("Test DEBUG")
-# log.info("Test INFO")
-
-# ---
-
-
 class LoggerFactory:
     _LOG: logging.Logger | None = None
 
@@ -130,7 +62,7 @@ class LoggerFactory:
 
 
 # Define formatters dictionary
-formatters = {
+formatters: dict[str, dict] = {
     "console_formatter": {
         "format": red_log.DEFAULT_FMT,
         "datefmt": red_log.DEFAULT_DATE_FMT,
@@ -142,7 +74,7 @@ formatters = {
 }
 
 # Define handlers dictionary
-handlers = {
+handlers: dict[str, str | int] = {
     "console_handler": {
         "class": "logging.StreamHandler",
         "level": "DEBUG",
@@ -159,7 +91,7 @@ handlers = {
 }
 
 # Define loggers dictionary
-loggers = {
+loggers: dict[str, dict[str | list[str]]] = {
     "": {  # Root logger
         "level": "DEBUG",
         "handlers": ["console_handler", "file_handler"],
@@ -167,7 +99,7 @@ loggers = {
 }
 
 # Initialize logger
-logger = LoggerFactory.get_logger(
+logger: logging.Logger = LoggerFactory.get_logger(
     name=__name__,
     log_level="DEBUG",
     handlers=handlers,
