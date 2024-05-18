@@ -19,6 +19,7 @@ import logging
 
 from red_log.constants import DEFAULT_DATE_FMT, DEFAULT_FMT, DEFAULT_LOGGER_STYLE
 from red_log.validators import validate_log_style
+from .validators import validate_str_input
 
 
 DEFAULT_LOG_FORMATTER: dict = {
@@ -33,23 +34,6 @@ TS_MSG: dict = {"ts_msg": {"format": "[%(asctime)s]: %(message)s"}}
 
 ## Only level and message
 LEVEL_MSG: dict = {"level_msg": {"format": "[%(levelname)s]"}}
-
-
-def __validate_str_input(
-    _str: str = None, valid_inputs: list[t.Any] | None = None
-) -> str:
-    assert _str, ValueError("_str cannot be None")
-    assert isinstance(_str, str), TypeError(
-        f"Invalid type for _str, must be a string. Got type: ({type(_str)})"
-    )
-
-    if valid_inputs:
-        ## Ensure input string is in list of valid inputs.
-        assert _str in valid_inputs, ValueError(
-            f"Invalid input '{_str}'. Must be one of: {valid_inputs}"
-        )
-
-    return _str
 
 
 def _formatter_dict(name: str = None, fmt: str = None, datefmt: str = None) -> dict:
@@ -81,9 +65,9 @@ def _formatter_dict(name: str = None, fmt: str = None, datefmt: str = None) -> d
     Returns:
         (dict): A dictionary defining a logging formatter.
     """
-    name = __validate_str_input(_str=name)
-    fmt = __validate_str_input(_str=fmt)
-    datefmt = __validate_str_input(_str=datefmt)
+    name = validate_str_input(_str=name)
+    fmt = validate_str_input(_str=fmt)
+    datefmt = validate_str_input(_str=datefmt)
 
     try:
         formatter_dict: dict = {name: {"format": fmt, "datefmt": datefmt}}
@@ -122,9 +106,9 @@ def __formatter_obj(
             For example, `logging.Formatter('%(ip)s %(message)s', defaults={"ip": None})`.
 
     """
-    fmt = __validate_str_input(_str=fmt)
-    style = validate_log_style(style_str=__validate_str_input(_str=style))
-    datefmt = __validate_str_input(_str=datefmt)
+    fmt = validate_str_input(_str=fmt)
+    style = validate_log_style(style_str=validate_str_input(_str=style))
+    datefmt = validate_str_input(_str=datefmt)
 
     try:
         _formatter: logging.Formatter = logging.Formatter(
@@ -170,9 +154,9 @@ def get_formatter(
         (dict): If `as_dict=True`, returns a logging formatter definition as a configDict.
         (logging.Formatter): If `as_dict=False` (default), returns a `logging.Formatter` instance.
     """
-    fmt = __validate_str_input(_str=fmt)
-    datefmt = __validate_str_input(_str=datefmt)
-    style = validate_log_style(style_str=__validate_str_input(_str=style))
+    fmt = validate_str_input(_str=fmt)
+    datefmt = validate_str_input(_str=datefmt)
+    style = validate_log_style(style_str=validate_str_input(_str=style))
     if defaults:
         assert isinstance(defaults, dict), TypeError(
             f"defaults must be a dict. Got type: ({type(defaults)})"
@@ -182,7 +166,7 @@ def get_formatter(
         assert name, ValueError(
             "as_dict is True, but missing a name for the formatter."
         )
-        name = __validate_str_input(_str=name)
+        name = validate_str_input(_str=name)
 
         try:
             _formatter: dict = _formatter_dict(name=name, fmt=fmt, datefmt=datefmt)

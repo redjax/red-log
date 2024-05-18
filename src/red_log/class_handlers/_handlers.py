@@ -3,7 +3,7 @@ from logging.config import dictConfig
 from logging import StreamHandler, Handler, FileHandler, NullHandler
 import logging.config
 
-from red_log.constants import DEFAULT_DATE_FMT, DEFAULT_FMT, LogLevels
+from red_log.constants import DEFAULT_DATE_FMT, DEFAULT_FMT, LogLevelsEnum
 
 log: logging.Logger = logging.getLogger("red_log")
 
@@ -60,7 +60,7 @@ class LogConfig:
             self.name = "main"
         else:
             self.name = name
-        self.level = LogLevels[level.upper()]
+        self.level = LogLevelsEnum[level.upper()]
         # self.level = level.upper()
         self.fmt = fmt
         self.datefmt = datefmt
@@ -103,7 +103,7 @@ class RootLogConfig:
         disable_existing_loggers: bool = False,
     ) -> None:
         self.name = ""
-        # self.level = LogLevels[level.upper()].value
+        # self.level = LogLevelsEnum[level.upper()].value
         self.level = level.upper()
         self.propagate = propagate
         self.disable_existing_loggers = disable_existing_loggers

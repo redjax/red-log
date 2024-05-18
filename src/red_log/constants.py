@@ -14,7 +14,7 @@ DEFAULT_DATE_FMT: str = "%Y-%m-%d %H:%M:%S"
 DEFAULT_LOGGER_STYLE: str = "%"
 
 
-class LogLevels(Enum):
+class LogLevelsEnum(Enum):
     """Enum to convert input string to logging.LEVELNAME."""
 
     NOTSET = logging.NOTSET
@@ -23,3 +23,18 @@ class LogLevels(Enum):
     WARNING = logging.WARNING
     ERROR = logging.ERROR
     CRITICAL = logging.CRITICAL
+
+
+class LogLevelIntsEnum(Enum):
+    """Use input string to get log level as integer value.
+
+    Example:
+            log_level: int = LogLevelIntEnum("INFO").value  # = 20
+    """
+
+    NOTSET: int = 0
+    DEBUG: int = 10
+    INFO: int = 20
+    WARNING: int = 30
+    ERROR: int = 40
+    CRITICAL: int = 50

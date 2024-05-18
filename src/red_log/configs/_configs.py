@@ -13,6 +13,17 @@ from red_log.handlers import (
 )
 from red_log.loggers import DEFAULT_ROOT_LOGGER
 
+## The base configuration dict for a logging.Logger
+CONFIG_DICT_BASE: dict = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "propagate": True,
+    "root": {},
+    "formatters": {},
+    "handlers": {},
+    "loggers": {},
+}
+
 DEFAULT_LOGGING_CONFIG = dict(
     version=1,
     disable_existing_loggers=False,
