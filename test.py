@@ -19,7 +19,9 @@ formatter = red_log.formatters.get_formatter(name="default", as_dict=True)
 stream_handler = red_log.handlers.get_handler(log_level="info")
 print(f"Stream handler ({type(stream_handler)}): {stream_handler}")
 
-stream_handler_dict = red_log.handlers.get_handler(log_level="info", as_dict=True)
+stream_handler_dict = red_log.handlers.get_handler(
+    log_level="info", name="console", as_dict=True
+)
 print(f"Stream handler dict ({type(stream_handler_dict)}): {stream_handler_dict}")
 
 file_handler = red_log.handlers.get_handler(
@@ -44,3 +46,26 @@ rotating_file_handler_dict = red_log.handlers.get_handler(
 print(
     f"Rotating file handler dict ({type(rotating_file_handler_dict)}): {rotating_file_handler_dict}"
 )
+
+memory_handler = red_log.handlers.get_handler(handler_class="memory", log_level="info")
+print(f"Memory handler ({type(memory_handler)}): {memory_handler}")
+memory_handler_dict = red_log.handlers.get_handler(
+    handler_class="memory", log_level="debug", as_dict=True, name="memory_handler"
+)
+print(f"Memory handler dict ({type(memory_handler_dict)}): {memory_handler_dict}")
+
+print(f"Logging classes: ", red_log.handlers.VALID_HANDLER_CLASSES)
+
+# red_log.handlers.get_handler("")
+
+# stream_handler = red_log.handlers.get_handler(log_level="info")
+# print(f"Stream handler ({type(stream_handler)}): {stream_handler}")
+
+# file_handler_dict = red_log.handlers.get_handler(
+#     name="app_file", handler_class="file", log_level="info", as_dict=True
+# )
+# print(f"File handler dict ({type(file_handler_dict)}): {file_handler_dict}")
+
+# rotating_file_handler = red_log.handlers.get_handler(
+#     log_level="info", name="rotating_app_file", handler_class="rotatingfile"
+# )

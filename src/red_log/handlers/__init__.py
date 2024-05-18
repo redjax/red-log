@@ -9,3 +9,5 @@ from ._preconfigured_handlers import (
     TIMED_ROTATING_FILE_HANDLER,
 )
 from ._handlers import get_handler
+from .validators import VALID_HANDLER_CLASSES
+from ._types import HandlerType
