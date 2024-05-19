@@ -10,3 +10,10 @@ BASE_LOGGING_CONFIG_DICT: dict = {
     "handlers": {},
     "loggers": {},
 }
+
+BASE_LOGGING_FORMATTER_DICT: dict = {
+    "default": {
+        "format": None,
+        "datefmt": None,
+    }
+}
