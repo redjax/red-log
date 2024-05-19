@@ -1,1 +1,1 @@
-from ._factory import FormatterFactory
+from ._formatters import FormatterConfig

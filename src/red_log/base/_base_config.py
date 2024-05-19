@@ -1,6 +1,3 @@
-import typing as t
-
-## Config dict skeleton
 BASE_LOGGING_CONFIG_DICT: dict = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -9,11 +6,4 @@ BASE_LOGGING_CONFIG_DICT: dict = {
     "formatters": {},
     "handlers": {},
     "loggers": {},
-}
-
-BASE_LOGGING_FORMATTER_DICT: dict = {
-    "default": {
-        "format": None,
-        "datefmt": None,
-    }
 }

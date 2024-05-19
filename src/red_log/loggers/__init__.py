@@ -1,1 +1,1 @@
-from ._factory import LoggerFactory
+from ._loggers import LoggerConfig
