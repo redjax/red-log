@@ -8,6 +8,6 @@ from ._preconfigured_handlers import (
     ROTATING_FILE_HANDLER,
     TIMED_ROTATING_FILE_HANDLER,
 )
-from ._handlers import get_handler
+from ._handlers import get_handler, get_handler_config
 from .validators import VALID_HANDLER_CLASSES
 from ._types import HandlerType

@@ -8,255 +8,9 @@ from enum import Enum
 import queue
 import ssl
 import datetime
-from .validators import VALID_HANDLER_CLASSES
+from .validators import VALID_HANDLER_CLASSES, validate_parameters
 from ._types import HandlerType
-
-
-class HandlerObjectsEnum(Enum):
-    """Return a logging.Handler class matching an input string.
-
-    Note that enum keys are uppercase versions of the logging.Handler, without the "Handler" at the end. For example,
-    FILE = logging.FileHandler
-
-    Usage:
-        ```python title="HandlerObjectsEnum usage" linenums="1"
-        ## Note that you do not retrieve the enum value with `.value`. Instead, return the handler directly.
-        stream_handler = HandlerObjectsEnum["STREAM"]
-        ```
-    """
-
-    FILE = logging.FileHandler
-    ROTATINGFILE = logging.handlers.RotatingFileHandler
-    TIMEBASEDROTATINGFILE = logging.handlers.TimedRotatingFileHandler
-    QUEUE = logging.handlers.QueueHandler
-    QUEUELISTENER = logging.handlers.QueueListener
-    NULL = logging.NullHandler
-    STREAM = logging.StreamHandler
-    SYSLOG = logging.handlers.SysLogHandler
-    SMTP = logging.handlers.SMTPHandler
-    BUFFERING = logging.handlers.BufferingHandler
-    DATAGRAM = logging.handlers.DatagramHandler
-    HTTP = logging.handlers.HTTPHandler
-    MEMORY = logging.handlers.MemoryHandler
-    NTEVENTLOG = logging.handlers.NTEventLogHandler
-    SOCKET = logging.handlers.SocketHandler
-    WATCHEDFILE = logging.handlers.WatchedFileHandler
-
-
-# def __validate_parameters(
-#     handler_class: str,
-#     filename: str | None,
-#     max_bytes: int | None,
-#     backup_count: int | None,
-#     name: str | None,
-#     as_dict: bool,
-# ) -> tuple[str, str | None, int | None, int | None, str | None, bool]:
-#     handler_class = handler_class.upper().replace("HANDLER", "")
-#     try:
-#         handler_enum: HandlerObjectsEnum = HandlerObjectsEnum[handler_class]
-#     except KeyError:
-#         raise ValueError(f"Invalid handler_class: {handler_class}")
-
-#     handler_cls: t.Union[
-#         logging.FileHandler,
-#         logging.handlers.RotatingFileHandler,
-#         logging.handlers.TimedRotatingFileHandler,
-#         logging.handlers.QueueHandler,
-#         logging.handlers.QueueListener,
-#         logging.NullHandler,
-#         logging.StreamHandler,
-#         logging.handlers.SysLogHandler,
-#         logging.handlers.SMTPHandler,
-#         logging.handlers.BufferingHandler,
-#         logging.handlers.DatagramHandler,
-#         logging.handlers.HTTPHandler,
-#         logging.handlers.MemoryHandler,
-#         logging.handlers.NTEventLogHandler,
-#         logging.handlers.SocketHandler,
-#         logging.handlers.WatchedFileHandler,
-#     ] = handler_enum.value
-
-#     if as_dict and not name:
-#         raise ValueError("When as_dict=True, a handler name must be given.")
-
-#     if (
-#         handler_cls
-#         in (
-#             logging.FileHandler,
-#             logging.handlers.RotatingFileHandler,
-#             logging.handlers.TimedRotatingFileHandler,
-#             logging.handlers.WatchedFileHandler,
-#         )
-#         and not filename
-#     ):
-#         raise ValueError("When requesting a file handler, a filename must be given.")
-
-#     if handler_cls == logging.handlers.RotatingFileHandler:
-#         if not (filename and max_bytes is not None and backup_count is not None):
-#             raise ValueError(
-#                 "When requesting a rotating file handler, a filename, max_bytes, and backup_count must be given."
-#             )
-
-#     ## Return validated parameters
-#     return handler_class, filename, max_bytes, backup_count, name, as_dict
-
-
-def __validate_parameters(
-    handler_class: str,
-    filename: str | None = None,
-    max_bytes: int | None = None,
-    backup_count: int | None = None,
-    name: str | None = None,
-    as_dict: bool = False,
-    log_level: str = "NOTSET",
-    formatter_name: str = "default",
-    stream: str | None = "ext://sys.stdout",
-    mode: str = "a",
-    encoding: str | None = "utf-8",
-    delay: bool = False,
-    errors: str | None = None,
-    address: t.Union[str, t.Tuple[str, int]] = ("localhost", 514),
-    facility: int = logging.handlers.SysLogHandler.LOG_USER,
-    socktype: int | None = None,
-    mailhost: t.Union[str, t.Tuple[str, int]] | None = None,
-    fromaddr: str | None = None,
-    toaddrs: str | list | None = None,
-    subject: str | None = None,
-    credentials: tuple | None = None,
-    secure: tuple | None = None,
-    timeout: float | None = 1.0,
-    capacity: int | None = None,
-    host: str | None = None,
-    port: int | None = None,
-    method: str = "GET",
-    secure_http: bool = False,
-    context: ssl.SSLContext | None = None,
-    appname: str | None = None,
-    dllname: str | None = None,
-    logtype: str = "Application",
-    queue: queue.Queue | None = None,
-    *handlers: logging.Handler,
-) -> t.Union[
-    t.Tuple[
-        str,
-        str | None,
-        int | None,
-        int | None,
-        str | None,
-        bool,
-        str,
-        str,
-        str | None,
-        str,
-        str | None,
-        bool,
-        str | None,
-        t.Union[str, t.Tuple[str, int]],
-        int,
-        int | None,
-        t.Union[str, t.Tuple[str, int]] | None,
-        str | None,
-        t.Union[str, list] | None,
-        str | None,
-        tuple | None,
-        tuple | None,
-        float | None,
-        int | None,
-        str | None,
-        int | None,
-        str,
-        bool,
-        ssl.SSLContext | None,
-        str | None,
-        str | None,
-        str,
-        queue.Queue | None,
-    ],
-    HandlerType | None,
-]:
-    handler_class = handler_class.upper().replace("HANDLER", "")
-    try:
-        handler_enum: HandlerObjectsEnum = HandlerObjectsEnum[handler_class]
-    except KeyError:
-        raise ValueError(f"Invalid handler_class: {handler_class}")
-
-    handler_cls: t.Union[
-        logging.FileHandler,
-        logging.handlers.RotatingFileHandler,
-        logging.handlers.TimedRotatingFileHandler,
-        logging.handlers.QueueHandler,
-        logging.handlers.QueueListener,
-        logging.NullHandler,
-        logging.StreamHandler,
-        logging.handlers.SysLogHandler,
-        logging.handlers.SMTPHandler,
-        logging.handlers.BufferingHandler,
-        logging.handlers.DatagramHandler,
-        logging.handlers.HTTPHandler,
-        logging.handlers.MemoryHandler,
-        logging.handlers.NTEventLogHandler,
-        logging.handlers.SocketHandler,
-        logging.handlers.WatchedFileHandler,
-    ] = handler_enum.value
-
-    if as_dict and not name:
-        raise ValueError("When as_dict=True, a handler name must be given.")
-
-    if (
-        handler_cls
-        in (
-            logging.FileHandler,
-            logging.handlers.RotatingFileHandler,
-            logging.handlers.TimedRotatingFileHandler,
-            logging.handlers.WatchedFileHandler,
-        )
-        and not filename
-    ):
-        raise ValueError("When requesting a file handler, a filename must be given.")
-
-    if handler_cls == logging.handlers.RotatingFileHandler:
-        if not (filename and max_bytes is not None and backup_count is not None):
-            raise ValueError(
-                "When requesting a rotating file handler, a filename, max_bytes, and backup_count must be given."
-            )
-
-    ## Return validated parameters
-    return (
-        handler_class,
-        filename,
-        max_bytes,
-        backup_count,
-        name,
-        as_dict,
-        log_level,
-        formatter_name,
-        stream,
-        mode,
-        encoding,
-        delay,
-        errors,
-        address,
-        facility,
-        socktype,
-        mailhost,
-        fromaddr,
-        toaddrs,
-        subject,
-        credentials,
-        secure,
-        timeout,
-        capacity,
-        host,
-        port,
-        method,
-        secure_http,
-        context,
-        appname,
-        dllname,
-        logtype,
-        queue,
-        *handlers,
-    )
+from ._enums import HandlerObjectsEnum
 
 
 def __get_file_handler(
@@ -411,7 +165,7 @@ def __get_watched_file_handler(
     )
 
 
-def __get_handler_config(
+def get_handler_config(
     name: str,
     handler_cls: type[logging.Handler],
     log_level: str,
@@ -552,7 +306,7 @@ def get_handler(
 
     ## Validate input parameters
     # Merge explicit parameters with **kwargs
-    all_parameters = {
+    all_parameters: dict[str, t.Any] = {
         "handler_class": handler_class,
         "filename": filename,
         "max_bytes": max_bytes,
@@ -590,7 +344,7 @@ def get_handler(
     }
 
     # Call the validation function
-    validated_params = __validate_parameters(**all_parameters)
+    validated_params = validate_parameters(**all_parameters)
 
     # Check if validation succeeded
     if validated_params is None:
@@ -658,7 +412,7 @@ def get_handler(
     ] = handler_enum.value
 
     if as_dict:
-        return __get_handler_config(
+        return get_handler_config(
             name=name,
             handler_cls=handler_cls,
             log_level=log_level,
