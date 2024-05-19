@@ -429,9 +429,9 @@ if __name__ == "__main__":
     )
 
     logging_config = LoggingConfig()
-    logging_config.add_formatters([formatter])
+    logging_config.add_formatters(formatter_configs=[formatter])
     logging_config.add_handlers(
-        [
+        handler_configs=[
             stream_handler,
             file_handler,
             rotating_file_handler,
@@ -442,12 +442,12 @@ if __name__ == "__main__":
             custom_console_handler,
         ]
     )
-    logging_config.add_loggers([custom_logger])
+    logging_config.add_loggers(logger_configs=[custom_logger])
 
     # print(f"Logging config: {logging_config.get_config()}")
 
-    logging.config.dictConfig(logging_config.get_config())
-    log = logging.getLogger("custom")
+    logging.config.dictConfig(config=logging_config.get_config())
+    log: logging.Logger = logging.getLogger(name="custom")
 
     log.debug("Test DEBUG")
     log.info("Test INFO")
