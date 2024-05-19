@@ -9,7 +9,7 @@ from .configs import DEFAULT_LOGGING_CONFIG
 from .constants import DEFAULT_DATE_FMT, DEFAULT_FMT
 from .constants import LogLevelsEnum, LogLevelIntsEnum
 from .formatters import DEFAULT_LOG_FORMATTER
-from .handlers import (
+from .handlers.prefab import (
     APP_FILE_HANDLER,
     CLI_CONSOLE_HANDLER,
     CONSOLE_HANDLER,

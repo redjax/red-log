@@ -3,7 +3,7 @@ from __future__ import annotations
 from red_log.formatters import (
     DEFAULT_LOG_FORMATTER,
 )
-from red_log.handlers import (
+from red_log.handlers.prefab import (
     APP_FILE_HANDLER,
     CLI_CONSOLE_HANDLER,
     CONSOLE_HANDLER,
