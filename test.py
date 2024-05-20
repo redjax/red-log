@@ -4,13 +4,15 @@ import red_log.loggers
 import logging
 import logging.config
 
+import json
+
 if __name__ == "__main__":
     simple_formatter = red_log.formatters.FormatterConfig(
         name="simple",
-        fmt=red_log.constants.DEFAULT_SIMPLE_FMT,
+        fmt=red_log.constants.SIMPLE_FMT,
     )
     detail_formatter = red_log.formatters.FormatterConfig(
-        name="detail", fmt=red_log.constants.DEFAULT_DETAIL_FMT
+        name="detail", fmt=red_log.constants.DETAIL_FMT
     )
     # print(f"Simple formatter: {simple_formatter.get_configdict()}")
     # print(f"Detail formatter: {detail_formatter.get_configdict()}")
@@ -27,7 +29,7 @@ if __name__ == "__main__":
     )
 
     app_logger = red_log.loggers.LoggerConfig(
-        name="app", level="DEBUG", handlers=["console", "err_file"]
+        name=__name__, level="DEBUG", handlers=["console", "err_file"]
     )
 
     logger_config = red_log.configs.LoggingConfig()
@@ -38,9 +40,14 @@ if __name__ == "__main__":
 
     print(f"Logger config: {logger_config.get_config()}")
 
+    with open("ex_config.json", "w") as f:
+        data = json.dumps(logger_config.get_config(), indent=2)
+        f.write(data)
+
     logging.config.dictConfig(logger_config.get_config())
 
     log = logging.getLogger(__name__)
+    log.setLevel("DEBUG")
 
     log.debug("Test DEBUG")
     log.info("Test INFO")
