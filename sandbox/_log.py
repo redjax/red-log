@@ -2,25 +2,32 @@ import logging
 import logging.config
 import red_log
 
-simple_formatter = red_log.formatters.FormatterConfig(
-    name="simple", fmt=red_log.constants.SIMPLE_FMT
-)
-detail_formatter = red_log.formatters.FormatterConfig(
-    name="detail", fmt=red_log.constants.DETAIL_FMT
-)
 
-console_handler = red_log.handlers.StreamHandlerConfig(
-    name="console", level="DEBUG", formatter=simple_formatter
-)
+def setup_logging():
+    simple_formatter = red_log.config_classes.formatters.FormatterConfig(
+        name="simple", fmt=red_log.fmts.MESSAGE_FMT_BASIC
+    )
+    detail_formatter = red_log.config_classes.formatters.FormatterConfig(
+        name="detail", fmt=red_log.fmts.MESSAGE_FMT_DETAILED
+    )
 
-logger_config = red_log.loggers.LoggerConfig(
-    name="sandbox", level="DEBUG", handlers=[console_handler]
-)
+    console_handler = red_log.config_classes.handlers.StreamHandlerConfig(
+        name="console", level="DEBUG", formatter="simple"
+    )
 
-logging_config = red_log.LoggingConfig(
-    formatters=[simple_formatter, detail_formatter],
-    handlers=[console_handler],
-    loggers=logger_config,
-)
+    logger_config = red_log.config_classes.loggers.LoggerConfig(
+        name="sandbox", level="DEBUG", handlers=["console"]
+    )
+    root_logger_config = red_log.config_classes.loggers.LoggerConfig(
+        name="", level="DEBUG", handlers=["console"]
+    )
 
-logging.config.dictConfig(logging_config.get_config())
+    logging_config = red_log.assemble_configdict(
+        formatters=[simple_formatter, detail_formatter],
+        handlers=[console_handler],
+        loggers=[logger_config, root_logger_config],
+    )
+
+    logging.config.dictConfig(logging_config)
+
+    red_log.print_configdict(logging_config)
