@@ -1,71 +1,56 @@
-from enum import Enum
-import logging
-from logging.config import dictConfig
-
 import red_log
-from test_mod import test_log_levels
+import red_log.loggers
 
+import logging
+import logging.config
 
-formatter = red_log.formatters.get_formatter(name="default", as_dict=True)
-# print(f"Formatter ({type(formatter)}): {formatter}")
+import json
 
+if __name__ == "__main__":
+    simple_formatter = red_log.formatters.FormatterConfig(
+        name="simple",
+        fmt=red_log.constants.SIMPLE_FMT,
+    )
+    detail_formatter = red_log.formatters.FormatterConfig(
+        name="detail", fmt=red_log.constants.DETAIL_FMT
+    )
+    # print(f"Simple formatter: {simple_formatter.get_configdict()}")
+    # print(f"Detail formatter: {detail_formatter.get_configdict()}")
 
-# log_level: int = red_log.LogLevelIntsEnum["INFO"].value
-# print(f"Log level: {log_level}")
-# # log.debug(f"Log level: {log_level}")
+    console_handler = red_log.handlers.StreamHandlerConfig(
+        name="console", level="DEBUG", formatter="simple"
+    )
+    err_file_handler = red_log.handlers.FileHandlerConfig(
+        name="err_file",
+        level="ERROR",
+        formatter="detail",
+        filters=["error_filter"],
+        filename="err.log",
+    )
 
-# print(f"Base logger config dict: {red_log.configs.CONFIG_DICT_BASE}")
+    app_logger = red_log.loggers.LoggerConfig(
+        name=__name__, level="DEBUG", handlers=["console", "err_file"]
+    )
 
-stream_handler = red_log.handlers.get_handler(log_level="info")
-print(f"Stream handler ({type(stream_handler)}): {stream_handler}")
+    logger_config = red_log.configs.LoggingConfig()
 
-stream_handler_dict = red_log.handlers.get_handler(
-    log_level="info", name="console", as_dict=True
-)
-print(f"Stream handler dict ({type(stream_handler_dict)}): {stream_handler_dict}")
+    logger_config.add_formatters([simple_formatter, detail_formatter])
+    logger_config.add_handlers([console_handler, err_file_handler])
+    logger_config.add_loggers([app_logger])
 
-file_handler = red_log.handlers.get_handler(
-    name="app_file", handler_class="file", log_level="debug"
-)
-print(f"File handler ({type(file_handler)}): {file_handler}")
+    print(f"Logger config: {logger_config.get_config()}")
 
-file_handler_dict = red_log.handlers.get_handler(
-    name="app_log_file", handler_class="file", log_level="debug", as_dict=True
-)
-print(f"File handler dict ({type(file_handler_dict)}): {file_handler_dict}")
+    with open("ex_config.json", "w") as f:
+        data = json.dumps(logger_config.get_config(), indent=2)
+        f.write(data)
 
-rotating_file_handler = red_log.handlers.get_handler(
-    name=None, handler_class="rotatingfile", log_level="debug", filename="app.log"
-)
-print(f"Rotating file handler ({type(rotating_file_handler)}): {rotating_file_handler}")
+    logging.config.dictConfig(logger_config.get_config())
 
+    log = logging.getLogger(__name__)
+    log.setLevel("DEBUG")
 
-rotating_file_handler_dict = red_log.handlers.get_handler(
-    name=None, handler_class="rotatingfile", log_level="debug", filename="app.log"
-)
-print(
-    f"Rotating file handler dict ({type(rotating_file_handler_dict)}): {rotating_file_handler_dict}"
-)
-
-memory_handler = red_log.handlers.get_handler(handler_class="memory", log_level="info")
-print(f"Memory handler ({type(memory_handler)}): {memory_handler}")
-memory_handler_dict = red_log.handlers.get_handler(
-    handler_class="memory", log_level="debug", as_dict=True, name="memory_handler"
-)
-print(f"Memory handler dict ({type(memory_handler_dict)}): {memory_handler_dict}")
-
-print(f"Logging classes: ", red_log.handlers.VALID_HANDLER_CLASSES)
-
-# red_log.handlers.get_handler("")
-
-# stream_handler = red_log.handlers.get_handler(log_level="info")
-# print(f"Stream handler ({type(stream_handler)}): {stream_handler}")
-
-# file_handler_dict = red_log.handlers.get_handler(
-#     name="app_file", handler_class="file", log_level="info", as_dict=True
-# )
-# print(f"File handler dict ({type(file_handler_dict)}): {file_handler_dict}")
-
-# rotating_file_handler = red_log.handlers.get_handler(
-#     log_level="info", name="rotating_app_file", handler_class="rotatingfile"
-# )
+    log.debug("Test DEBUG")
+    log.info("Test INFO")
+    log.warning("Test WARNING")
+    log.error("Test ERROR")
+    log.critical("Test CRITICAL")

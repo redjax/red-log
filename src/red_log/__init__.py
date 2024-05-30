@@ -1,56 +1,21 @@
-## Initialize app logger high up in the package heirarchy to ensure child loggers
-#  instantiated with logging.getLogger(__name__) inherit defaults from the root logger.
+"""Classes and utilities to help configure the stdlib `logging` library for Python.
+
+Configurations (formatters, handlers, loggers, filters) can be created as classes, which
+can be compiled down to `logging.config.dictConfig`-compatible dicts using each class's
+`.get_dictconfig()` method, or by passing multiple initialized configuration classes to the
+`assemble_configdict()` method.
+"""
+
 from __future__ import annotations
 
-import logging
-from logging.config import dictConfig
-
-from . import (
-    configs,
-    constants,
-    formatters,
-    handlers,
-    filters,
-    loggers,
-    validators,
-    utils,
-)
-from .configs import DEFAULT_LOGGING_CONFIG
-from .constants import DEFAULT_DATE_FMT, DEFAULT_FMT
-from .constants import LogLevelsEnum, LogLevelIntsEnum
-from .formatters import DEFAULT_LOG_FORMATTER
-from .handlers.prefab import (
-    APP_FILE_HANDLER,
-    CLI_CONSOLE_HANDLER,
-    CONSOLE_HANDLER,
-    ERR_FILE_HANDLER,
-    ROTATING_FILE_HANDLER,
-    TIMED_ROTATING_FILE_HANDLER,
-)
-from .loggers import DEFAULT_ROOT_LOGGER, REQUESTS_LOGGER, SILENT_LOGGER, UVICORN_LOGGER
-from .utils import configure_root_logger
-
-
-## Dict config for library logger
-dictConfig(
-    config={
-        "version": 1,
-        "disable_existing_loggers": False,
-        "propagate": False,
-        "formatters": {
-            f"default": {
-                "format": "[%(asctime)s] [%(levelname)s]: %(message)s",
-                "datefmt": DEFAULT_DATE_FMT,
-            }
-        },
-        "handlers": {
-            f"console": {
-                "class": "logging.StreamHandler",
-                "formatter": "default",
-                "level": "DEBUG",
-                "stream": "ext://sys.stdout",
-            }
-        },
-        "loggers": {"red_log": {"handlers": ["console"], "level": "WARNING"}},
-    }
+from . import config_classes, fmts
+from .__base import BASE_LOGGING_CONFIG_DICT
+from .helpers import (
+    assemble_configdict,
+    get_formatter_config,
+    get_logger_config,
+    get_rotatingfilehandler_config,
+    get_streamhandler_config,
+    print_configdict,
+    save_configdict,
 )
