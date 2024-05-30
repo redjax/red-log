@@ -24,6 +24,7 @@ class StreamHandlerConfig(BaseHandlerConfig):
         stream (Any): The stream this handler controls, i.e. `ext://sys.stdout`, `ext://sys.stderr`, etc.
     """
 
+    level: str = "DEBUG"
     stream: t.Any | None = "ext://sys.stdout"
 
     def get_configdict(self) -> dict[str, dict[str, str]]:
