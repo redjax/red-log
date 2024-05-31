@@ -31,7 +31,7 @@
     }
   },
   "loggers": {
-    "__main__": {
+    "app": {
       "level": "DEBUG",
       "handlers": [
         "console",
