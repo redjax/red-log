@@ -1,24 +1,21 @@
-## Initialize app logger high up in the package heirarchy to ensure child loggers
-#  instantiated with logging.getLogger(__name__) inherit defaults from the root logger.
+"""Classes and utilities to help configure the stdlib `logging` library for Python.
+
+Configurations (formatters, handlers, loggers, filters) can be created as classes, which
+can be compiled down to `logging.config.dictConfig`-compatible dicts using each class's
+`.get_dictconfig()` method, or by passing multiple initialized configuration classes to the
+`assemble_configdict()` method.
+"""
+
 from __future__ import annotations
 
-import logging
-from logging.config import dictConfig
-
-from .configs import DEFAULT_LOGGING_CONFIG
-from .core.constants import DEFAULT_DATE_FMT, DEFAULT_FMT
-from .formatters import DEFAULT_LOG_FORMATTER
-from .handlers import (
-    APP_FILE_HANDLER,
-    CLI_CONSOLE_HANDLER,
-    CONSOLE_HANLDER,
-    ERR_FILE_HANDLER,
-    ROTATING_FILE_HANDLER,
-    TIMED_ROTATING_FILE_HANDLER,
+from . import config_classes, fmts
+from .__base import BASE_LOGGING_CONFIG_DICT
+from .helpers import (
+    assemble_configdict,
+    get_formatter_config,
+    get_logger_config,
+    get_rotatingfilehandler_config,
+    get_streamhandler_config,
+    print_configdict,
+    save_configdict,
 )
-from .loggers import DEFAULT_ROOT_LOGGER, REQUESTS_LOGGER, SILENT_LOGGER, UVICORN_LOGGER
-from .utils import configure_root_logger
-
-## Configure logging for red_log using the default logging config
-# dictConfig(DEFAULT_LOGGING_CONFIG)
-# logging.getLogger(__name__).addHandler(logging.NullHandler())
