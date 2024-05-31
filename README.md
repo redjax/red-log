@@ -2,7 +2,7 @@
 
 ## Logger Configuration
 
-## With dictConfig()
+### With dictConfig()
 
 Base config dict:
 
