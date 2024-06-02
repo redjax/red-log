@@ -1,5 +1,11 @@
 # red-log
 
+## DEPRECATED
+
+This project is deprecated, as the name was too similar to some other unspecified package in the pypi index.
+
+Devlopment resuming at [https://github.com/redjax/red-logging](https://github.com/redjax/red-logging)
+
 ## Logger Configuration
 
 ### With dictConfig()
